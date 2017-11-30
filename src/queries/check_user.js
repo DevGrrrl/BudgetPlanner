@@ -1,7 +1,7 @@
 const databaseConnection = require('../database/db_connection.js');
 
 const checkUser = (newItem, cb) => {
-    databaseConnection.query('SELECT CASE WHEN EXISTS (SELECT * FROM users WHERE user_name = $1) THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END', [newItem.userName],
+    databaseConnection.query('SELECT CASE WHEN EXISTS (SELECT * FROM users WHERE user_name = $1) THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END', [newItem.username],
         (err, res) => {
             if (err) {
                 return cb(err);
