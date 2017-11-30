@@ -31,14 +31,14 @@ test('getCostPerPerson', (t) => {
 
 test('test checkUser', (t) => {
     runDbBuild(function(err, res) {
-        let newItem = { userName: 'Alina' }
+        let newItem = { username: 'Alina' }
         checkUser(newItem, (err, res) => {
             if (err) console.log(err)
             t.equal(1, res, 'Should return 1 if name is present in db');
         })
     })
     runDbBuild(function(err, res) {
-        let newItem = { userName: 'Hannah' }
+        let newItem = { username: 'Hannah' }
         checkUser(newItem, (err, res) => {
             if (err) console.log(err)
             t.equal(0, res, 'Should return 0 if name is not present in db')
@@ -49,7 +49,7 @@ test('test checkUser', (t) => {
 
 test('test createUser', (t) => {
     runDbBuild(function(err, res) {
-        let newItem = { userName: 'Hannah' }
+        let newItem = { username: 'Hannah' }
         createUser(newItem, (err, res) => {
             if (err) console.log(err)
             getUser((err, res) => {
@@ -63,10 +63,10 @@ test('test createUser', (t) => {
 test('test setNewItem', (t) => {
     runDbBuild(function(err, res) {
         let newItem = {
-            userName: 'Alina',
+            username: 'Alina',
             cost: 2.45,
             category: 'Groceries',
-            datePurchased: new Date('2017-11-29'),
+            date: new Date('2017-11-29'),
         }
         setNewItem(newItem, (err, res) => {
             if (err) console.log(err)
