@@ -24,6 +24,6 @@ INSERT INTO items (user_id, cost, category, date_purchased, status) VALUES ((SEL
 
 INSERT INTO items (user_id, cost, category, date_purchased, status) VALUES ((SELECT id FROM users WHERE user_name = 'James'), 5.30, 'Groceries', '2017-11-29', true);
 
-INSERT INTO items (user_id, cost, category, date_purchased, status) VALUES ((SELECT id FROM users WHERE user_name = 'Alina'), 9.30, 'Groceries', '2017-11-29', true);
+INSERT INTO items (user_id, cost, category, date_purchased, status) VALUES ((SELECT id FROM users WHERE user_name = 'Alina'), 9.30, 'Groceries', '2017-11-29', false);
 
 COMMIT;
