@@ -83,7 +83,7 @@ const sumAllHandler = (request, response) => {
 }
 
 
-const dispplayItemsHandler = (request, response) => {
+const displayItemsHandler = (request, response) => {
     unpaidItems((err, res) => {
         if (err) console.log(err)
         response.writeHead(200, { 'content-type': 'application/json' })
@@ -114,4 +114,4 @@ let testArr = [{
     }
 ]
 
-module.exports = { homeHandler, staticFileHandler, inputHandler, sumAllHandler , unpaidItems }
+module.exports = { homeHandler, staticFileHandler, inputHandler, sumAllHandler , displayItemsHandler  }
