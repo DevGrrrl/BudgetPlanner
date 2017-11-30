@@ -83,7 +83,7 @@ test('test setNewItem', (t) => {
 
 test('unpaidItems', (t) => {
     runDbBuild(function(err, res) {
-        let expected = { user_name: 'Alina', cost: 9.30, category: 'Groceries', date_purchased: '2017-11-29'};
+        let expected = { user_name: 'Alina', cost: 9.30, category: 'Groceries', date_purchased: '2017-11-29' };
         unpaidItems((err, res) => {
             if (err) console.log(err)
             t.equal(expected, res, 'Should return all items with a status of false');

@@ -7,28 +7,31 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/public/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
 </head>
 
 <body>
-  <section class="dataContainer" id="data_container">
+    <section class="dataContainer" id="data_container">
 
-  </section>
-
-    <form class="inputForm" id="form">
-      <input type="text" name="username" id="username" value="" placeholder="Name" pattern="[a-zA-Z]+" required>
-      <select id="category" name="category"required>
-          <option value="" disabled selected>Categories</option>
+    </section>
+    <section class="form_container">
+        <h1 class="header">Kitty Splitter</h1>
+        <form class="inputForm" id="form">
+            <input type="text" name="username" class="username" id="username" value="" placeholder="Username" pattern="[a-zA-Z]+" required>
+            <select id="category" name="category" required>
+          <option value="" disabled selected>Choose a category</option>
           <option value="groceries">Groceries</option>
           <option value="bill-payments">Bill payments</option>
           <option value="household-item">Household item</option>
           <option value="other">Other</option>
-      </select>
-      <input type="number" id="cost" name="cost" value="" placeholder="Cost" required step="0.01" min="0">
-      <input type="date" id="date" name="date" min="2017-01-01" max="2019-01-01" required>
-      <input type="submit" id="submitForm" value="Enter item" required>
-    </form>
+            </select>
+            <input type="number" id="cost" name="cost" value="" placeholder="Cost" required step="0.01" min="0">
+            <input type="date" id="date" name="date" min="2017-01-01" max="2019-01-01" required>
+            <input type="submit" id="submitButton" value="Enter item" required>
+        </form>
+        <button type="button" name="generate-cost" id="generateCost" class="sumbtn">Sum Costs</button>
+    </section>
 
-    <button type="button" name="generate-cost" id="generateCost">Generate Costs</button>
 
     <script src="/public/index.js"></script>
 </body>
