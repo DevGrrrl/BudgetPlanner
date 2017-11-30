@@ -33,7 +33,8 @@ function displayCurrentItems() {
     request('displayItems', 'GET', function(err, res) {
         if (err) console.log(err);
         clearDataContainer();
-        table = document.createElement('table');
+        var table = document.createElement('table');
+        table.className = 'table';
         var tr = document.createElement('tr');
         tr.appendChild(document.createElement('td'));
         tr.appendChild(document.createElement('td'));
@@ -93,7 +94,8 @@ btn.addEventListener('click', function(event) {
     request('sumall', 'GET', function(err, res) {
         if (err) console.log(err);
         clearDataContainer();
-        table = document.createElement('table');
+        var table = document.createElement('table');
+        table.className = 'table';
         var tr = document.createElement('tr');
         tr.appendChild(document.createElement('td'));
         tr.appendChild(document.createElement('td'));
