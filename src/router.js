@@ -8,7 +8,6 @@ const router = (request, response) => {
     } else if (endpoint.indexOf("public") !== -1) {
         staticFileHandler(request, response, endpoint);
     } else if (endpoint.indexOf("input") !== -1 ){
-
         inputHandler(request, response, endpoint);
     }
       else {

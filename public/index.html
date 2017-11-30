@@ -10,7 +10,19 @@
 </head>
 
 <body>
+   <table id = "table">
+     <thead>
+       <tr>
+         <th>User</th>
+         <th>Cost</th>
+         <th>Category</th>
+         <th>Date</th>
+       </tr>
+     </thead>
+    <tbody id ="table_container">
+    </tbody>
 
+   </table>
     <form class="inputForm" id="form" action="/input" method="POST">
       <input type="text" name="username" id="username" value="" placeholder="Name" pattern="[a-zA-Z]+" required>
       <select id="category" name="category"required>
@@ -27,7 +39,7 @@
 
     <button type="button" name="generate-cost" id="generateCost">Generate Costs</button>
 
-    <script src=/public/index.js ""></script>
+    <script src="/public/index.js"></script>
 </body>
 
 </html>
