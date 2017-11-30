@@ -10,25 +10,25 @@
 </head>
 
 <body>
-  <section class="dataContainer" id="data_container">
+    <section class="dataContainer" id="data_container">
 
-  </section>
+    </section>
 
     <form class="inputForm" id="form">
-      <input type="text" name="username" id="username" value="" placeholder="Name" pattern="[a-zA-Z]+" required>
-      <select id="category" name="category"required>
-          <option value="" disabled selected>Categories</option>
+        <input type="text" name="username" id="username" value="" placeholder="Name" pattern="[a-zA-Z]+" required>
+        <select id="category" name="category" required>
+          <option value="" disabled selected>Choose a category</option>
           <option value="groceries">Groceries</option>
           <option value="bill-payments">Bill payments</option>
           <option value="household-item">Household item</option>
           <option value="other">Other</option>
       </select>
-      <input type="number" id="cost" name="cost" value="" placeholder="Cost" required step="0.01" min="0">
-      <input type="date" id="date" name="date" min="2017-01-01" max="2019-01-01" required>
-      <input type="submit" id="submitForm" value="Enter item" required>
+        <input type="number" id="cost" name="cost" value="" placeholder="Cost" required step="0.01" min="0">
+        <input type="date" id="date" name="date" min="2017-01-01" max="2019-01-01" required>
+        <input type="submit" id="submitButton" value="Enter item" required>
     </form>
 
-    <button type="button" name="generate-cost" id="generateCost">Generate Costs</button>
+    <button type="button" name="generate-cost" id="generateCost">Sum Costs</button>
 
     <script src="/public/index.js"></script>
 </body>

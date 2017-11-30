@@ -27,10 +27,10 @@ const homeHandler = (request, response) => {
 
 const staticFileHandler = (request, response, endpoint) => {
     const extensionType = {
-            html: 'text/html',
-            css: 'text/css',
-            js: 'application/javascript',
-        }
+        html: 'text/html',
+        css: 'text/css',
+        js: 'application/javascript',
+    }
     const extension = endpoint.split('.')[1];
     const filePath = path.join(__dirname, '..', endpoint);
     fs.readFile(filePath, (err, file) => {
@@ -42,12 +42,12 @@ const staticFileHandler = (request, response, endpoint) => {
 
 const inputHandler = (request, response, endpoint) => {
     var allTheData = '';
-    request.on('data', function(chunckOfData) {
+    request.on('data', (chunckOfData) => {
         allTheData += chunckOfData;
     });
-    request.on('end', function() {
-        const newItem = querystring.parse(allTheData);
-
+    request.on('end', () => {
+        const newItem = JSON.parse(allTheData);
+        console.log(newItem);
         checkUser(newItem, (err, res) => {
             if (err) console.log(err)
             if (res === 0) {
@@ -56,14 +56,16 @@ const inputHandler = (request, response, endpoint) => {
                     setNewItem(newItem, (err, res) => {
                         if (err) console.log(err)
                         response.writeHead(200, { 'content-type': 'application/json' })
-                        response.end(JSON.stringify(testArr));
+                        response.writeHead(200, { 'location': '/' })
+                        response.end(JSON.stringify(res));
                     })
                 })
             } else if (res === 1) {
                 setNewItem(newItem, (err, res) => {
                     if (err) console.log(err)
                     response.writeHead(200, { 'content-type': 'application/json' })
-                    response.end(JSON.stringify(testArr));
+                    response.writeHead(200, { 'location': '/' })
+                    response.end(JSON.stringify(res));
                 })
             }
         })
@@ -74,7 +76,6 @@ const sumAllHandler = (request, response) => {
     getCostsPerPerson((err, res) => {
         if (err) console.log(err)
         response.writeHead(200, { 'content-type': 'application/json' })
-        console.log(res)
         response.end(JSON.stringify(res));
     })
 }
@@ -84,31 +85,8 @@ const displayItemsHandler = (request, response) => {
     unpaidItems((err, res) => {
         if (err) console.log(err)
         response.writeHead(200, { 'content-type': 'application/json' })
-        console.log(res)
         response.end(JSON.stringify(res));
     })
 }
 
-/*TEST ARRAY*/
-
-let testArr = [{
-        user_name: 'Alina',
-        cost: 2.45,
-        category: 'Groceries',
-        date_purchased: "2017-11-29T00:00:00.000Z"
-    },
-    {
-        user_name: 'Alina',
-        cost: 1,
-        category: 'bill-payments',
-        date_purchased: "2017-11-02T00:00:00.000Z"
-    },
-    {
-        user_name: 'James',
-        cost: 3,
-        category: 'household-item',
-        date_purchased: "2017-11-01T00:00:00.000Z"
-    }
-]
-
-module.exports = { homeHandler, staticFileHandler, inputHandler, sumAllHandler , displayItemsHandler  }
+module.exports = { homeHandler, staticFileHandler, inputHandler, sumAllHandler, displayItemsHandler }
