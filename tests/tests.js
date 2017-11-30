@@ -3,12 +3,13 @@ const shot = require('shot');
 // const router = require('./src/router');
 // const { homeHandler, staticFileHandler, resultsHandler } = require('./src/handler');
 const runDbBuild = require("../src/database/db_build");
-const getCostPerPerson = require('../src/queries/get_costs_per_person.js')
-const checkUser = require('../src/queries/check_user.js')
-const createUser = require('../src/queries/create_user.js')
-const setNewItem = require('../src/queries/set_new_item.js')
-const getUser = require('../src/queries/test_queries/test_get_user.js')
-const getItem = require('../src/queries/test_queries/test_get_item.js')
+const getCostPerPerson = require('../src/queries/get_costs_per_person.js');
+const checkUser = require('../src/queries/check_user.js');
+const createUser = require('../src/queries/create_user.js');
+const setNewItem = require('../src/queries/set_new_item.js');
+const getUser = require('../src/queries/test_queries/test_get_user.js');
+const getItem = require('../src/queries/test_queries/test_get_item.js');
+const unpaidItems = require('../src/queries/unpaid_items');
 
 
 test('Tape is working', (t) => {
@@ -74,6 +75,19 @@ test('test setNewItem', (t) => {
                 t.equal(4, res.length, "Should be new row in items table (total 4)")
                 t.end();
             })
+        })
+    })
+});
+
+
+
+test('unpaidItems', (t) => {
+    runDbBuild(function(err, res) {
+        let expected = { user_name: 'Alina', cost: 9.30, category: 'Groceries', date_purchased: '2017-11-29'};
+        unpaidItems((err, res) => {
+            if (err) console.log(err)
+            t.equal(expected, res, 'Should return all items with a status of false');
+            t.end();
         })
     })
 });
