@@ -5,6 +5,8 @@ const checkUser = require('./queries/check_user');
 const createUser = require('./queries/create_user');
 const setNewItem = require('./queries/set_new_item');
 const getCostsPerPerson = require('./queries/get_costs_per_person');
+const unpaidItems = require('./queries/unpaid_items.js');
+
 
 const homeHandler = (request, response) => {
     fs.readFile(path.join(__dirname, '..', 'public', 'index.html'), 'utf8', (err, file) => {
@@ -77,6 +79,16 @@ const sumAllHandler = (request, response) => {
     })
 }
 
+
+const displayItemsHandler = (request, response) => {
+    unpaidItems((err, res) => {
+        if (err) console.log(err)
+        response.writeHead(200, { 'content-type': 'application/json' })
+        console.log(res)
+        response.end(JSON.stringify(res));
+    })
+}
+
 /*TEST ARRAY*/
 
 let testArr = [{
@@ -99,4 +111,4 @@ let testArr = [{
     }
 ]
 
-module.exports = { homeHandler, staticFileHandler, inputHandler, sumAllHandler }
+module.exports = { homeHandler, staticFileHandler, inputHandler, sumAllHandler , displayItemsHandler  }
