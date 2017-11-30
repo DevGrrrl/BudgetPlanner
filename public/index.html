@@ -10,20 +10,11 @@
 </head>
 
 <body>
-   <table id = "table">
-     <thead>
-       <tr>
-         <th>User</th>
-         <th>Cost</th>
-         <th>Category</th>
-         <th>Date</th>
-       </tr>
-     </thead>
-    <tbody id ="table_container">
-    </tbody>
+  <section class="dataContainer" id="data_container">
 
-   </table>
-    <form class="inputForm" id="form" action="/input" method="POST">
+  </section>
+
+    <form class="inputForm" id="form">
       <input type="text" name="username" id="username" value="" placeholder="Name" pattern="[a-zA-Z]+" required>
       <select id="category" name="category"required>
           <option value="" disabled selected>Categories</option>
