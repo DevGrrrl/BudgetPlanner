@@ -1,1 +1,15 @@
-/* If user doesn't exist call this function - creates new user*/
+const databaseConnection = require('../database/db_connection.js');
+
+const createUser = (newItem, cb) => {
+    databaseConnection.query('INSERT INTO users (user_name) VALUES ($1)', [newItem.userName],
+        (err, res) => {
+            if (err) {
+                return cb(err);
+            } else {
+                cb(null, res.rows);
+            }
+        }
+    );
+};
+
+module.exports = createUser;
