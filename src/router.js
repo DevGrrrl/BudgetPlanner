@@ -12,6 +12,7 @@ const router = (request, response) => {
     } else if (endpoint.indexOf("sumall") !== -1) {
         sumAllHandler(request, response);
     }else if (endpoint.indexOf("displayItems") !== -1) {
+      console.log('router being called');
         displayItemsHandler(request, response);
     } else {
         response.writeHead('404', {

@@ -31,7 +31,6 @@ const staticFileHandler = (request, response, endpoint) => {
             css: 'text/css',
             js: 'application/javascript',
         }
-        /* UPADATE THIS*/
     const extension = endpoint.split('.')[1];
     const filePath = path.join(__dirname, '..', endpoint);
     fs.readFile(filePath, (err, file) => {
@@ -56,7 +55,6 @@ const inputHandler = (request, response, endpoint) => {
                     if (err) console.log(err)
                     setNewItem(newItem, (err, res) => {
                         if (err) console.log(err)
-                            //else call query which passes back all items with status false
                         response.writeHead(200, { 'content-type': 'application/json' })
                         response.end(JSON.stringify(testArr));
                     })
@@ -64,7 +62,6 @@ const inputHandler = (request, response, endpoint) => {
             } else if (res === 1) {
                 setNewItem(newItem, (err, res) => {
                     if (err) console.log(err)
-                        //else call query which passes back all items with status false
                     response.writeHead(200, { 'content-type': 'application/json' })
                     response.end(JSON.stringify(testArr));
                 })

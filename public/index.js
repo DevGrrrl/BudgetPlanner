@@ -6,56 +6,71 @@ var itemCost = document.getElementById('cost');
 var datePurchased = document.getElementById('date');
 var submit = document.getElementById('submitForm');
 var btn = document.getElementById('generateCost');
-var table = document.getElementById('table');
-var tableContainer = document.getElementById('table_container');
+var dataContainer = document.getElementById('data_container');
 
-//XMLHttpRequest to refresh data in table whenever page refreshes
-window.onload = function() {
-  clearPage();
-  getCurrentResults();
-};
-//tell database to drop tables
 
-btn.addEventListener('click', function(e){
-
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        var result = JSON.parse(xhr.responseText);
-        clearPage();
-        updateDomFinal(result);
-      }
-    };
-    xhr.open("GET", "/finalResults", true);
-    xhr.send(body);
-
-});
-
-//update dom with results
-function updateDomFinal(obj){
-
-}
-
-//clear page
-function clearPage(){
-  while(tableContainer.firstElementChild){
-    tableContainer.removeChild(tableContainer.firstElementChild);
-  }
-}
-
-function getCurrentResults(){
+//generic xhr XMLHttpRequest
+function request(url, method, cb) {
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-        var result = JSON.parse(xhr.responseText);
-        updateDomCurrent(result);
+    if(xhr.readyState === 4) {
+      if(xhr.status === 200) {
+        console.log(JSON.parse(xhr.responseText));
+        cb(null, JSON.parse(xhr.responseText));
+      } else {
+        var errorMessage = JSON.parse(xhr.responseText);
+        cb("Error" + url + " " + errorMessage);
+      }
     }
   };
-  xhr.open("GET", "/currentResults", true);
+  xhr.open(method, url, true);
   xhr.send();
-
 }
 
-function updateDomCurrent(obj){
-  
+
+//populate DOM with cummulative items
+function displayCurrentItems() {
+  request('displayItems', 'GET', function(err, res) {
+    if (err) console.log(err);
+    console.log(res);
+    table = document.createElement('table');
+    test.forEach(function (item, i) {
+      var tr = document.createElement('tr');
+
+      tr.appendChild( document.createElement('td') );
+      tr.appendChild( document.createElement('td') );
+      tr.appendChild( document.createElement('td') );
+      tr.appendChild( document.createElement('td') );
+
+      tr.cells[0].appendChild( document.createTextNode(test.user_name) );
+      tr.cells[1].appendChild( document.createTextNode(test.cost) );
+      tr.cells[2].appendChild( document.createTextNode(test.category) );
+      tr.cells[3].appendChild( document.createTextNode(test.date_purchased) );
+
+      table.appendChild(tr);
+    })
+  })
 }
+
+displayCurrentItems();
+
+
+function sumAll(){
+  request('sumall', 'GET', function(err, res) {
+    if (err) console.log(err);
+    console.log(res);
+  }) 
+}
+
+sumAll();
+//update dom with results
+// function updateDomFinal(obj){
+//
+// }
+
+//clear page
+// function clearPage(){
+//   while(tableContainer.firstElementChild){
+//     tableContainer.removeChild(tableContainer.firstElementChild);
+//   }
+// }
