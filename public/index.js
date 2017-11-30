@@ -15,6 +15,7 @@ function request(url, method, cb) {
   xhr.onreadystatechange = function() {
     if(xhr.readyState === 4) {
       if(xhr.status === 200) {
+        console.log(JSON.parse(xhr.responseText));
         cb(null, JSON.parse(xhr.responseText));
       } else {
         var errorMessage = JSON.parse(xhr.responseText);
@@ -28,10 +29,10 @@ function request(url, method, cb) {
 
 
 //populate DOM with cummulative items
-function displayCurrentItems(test) {
-  request('/displayItems', 'GET', function(err, res) {
-    if err console.log(err);
-
+function displayCurrentItems() {
+  request('displayItems', 'GET', function(err, res) {
+    if (err) console.log(err);
+    console.log(res);
     table = document.createElement('table');
     test.forEach(function (item, i) {
       var tr = document.createElement('tr');
@@ -51,51 +52,25 @@ function displayCurrentItems(test) {
   })
 }
 
- var test = [ { user_name: 'Alina', cost: 9.3, category: 'Groceries', date_purchased: 'Wed Nov 29 2017 00:00:00 GMT+0000 (GMT)' }, { user_name: 'Alina', cost: 9.3, category: 'Groceries',
- date_purchased: 'Wed Nov 29 2017 00:00:00 GMT+0000 (GMT)' } ]
+displayCurrentItems();
 
 
-//tell database to drop tables
-btn.addEventListener('click', function(e){
-
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        var result = JSON.parse(xhr.responseText);
-        clearPage();
-        updateDomFinal(result);
-      }
-    };
-    xhr.open("GET", "/finalResults", true);
-    xhr.send(body);
-
-});
-
-//update dom with results
-function updateDomFinal(obj){
-
+function sumAll(){
+  request('sumall', 'GET', function(err, res) {
+    if (err) console.log(err);
+    console.log(res);
+  }) 
 }
+
+sumAll();
+//update dom with results
+// function updateDomFinal(obj){
+//
+// }
 
 //clear page
-function clearPage(){
-  while(tableContainer.firstElementChild){
-    tableContainer.removeChild(tableContainer.firstElementChild);
-  }
-}
-
-function getCurrentResults(){
-  var xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-        var result = JSON.parse(xhr.responseText);
-        updateDomCurrent(result);
-    }
-  };
-  xhr.open("GET", "/currentResults", true);
-  xhr.send();
-
-}
-
-function updateDomCurrent(obj){
-
-}
+// function clearPage(){
+//   while(tableContainer.firstElementChild){
+//     tableContainer.removeChild(tableContainer.firstElementChild);
+//   }
+// }
