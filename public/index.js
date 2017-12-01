@@ -40,7 +40,7 @@ function displayCurrentItems() {
             var date = new Date(res[i].date_purchased);
             var options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
             var line = document.createElement('p');
-            var concatItem = document.createTextNode(res[i].user_name + " spent " + "£" + Number(res[i].cost).toFixed(2) + " on " + convertText(res[i].category) + " on the " + date.toLocaleDateString('en-GB', options));
+            var concatItem = document.createTextNode(res[i].user_name + " spent " + "£" + Number(res[i].cost).toFixed(2) + " on " + convertText(res[i].category) + " on " + date.toLocaleDateString('en-GB', options));
             line.appendChild(concatItem);
             itemContainer.appendChild(line);
         })
@@ -80,6 +80,7 @@ form.addEventListener('submit', function(event) {
     datePurchased.value = "";
 })
 
+//Sum All button
 btn.addEventListener('click', function(event) {
     event.preventDefault();
     request('sumall', 'GET', function(err, res) {

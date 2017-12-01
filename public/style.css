@@ -36,6 +36,10 @@ body {
     letter-spacing: 2px;
 }
 
+.tagline {
+  margin-left: 10%;
+}
+
 input,
 select,
 .sumbtn {
@@ -50,6 +54,12 @@ select,
     border-radius: 5px;
 }
 
+.sumbtn {
+  margin-left: 10%;
+  margin-top: 5%;
+  background-color: #E2E0E1;
+}
+
 .dataContainer {
     display: flex;
     align-items: center;
@@ -61,7 +71,6 @@ select,
 }
 
 .item_container {
-    border-spacing: 1em;
     font-size: 1rem;
     overflow: scroll;
     max-height: 70%;
@@ -92,4 +101,5 @@ select,
  .dataContainer {
      padding: 5%;
  }
+
 }
