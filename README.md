@@ -15,7 +15,8 @@ __User Stories__
 
 ## How we Built it
 We started with our schema, keeping it as simple as possible whilst capturing information we felt we might need as the project progressed:
-[PICTURE]
+
+![schema diagram](https://user-images.githubusercontent.com/22034073/33482139-83d848fc-d68f-11e7-8f73-6073a8814925.png)
 
 We then moved on to planning out our software architecture, and did some detailed mapping of our functions and intput/outputs.
 
@@ -28,3 +29,4 @@ We then moved on to planning out our software architecture, and did some detaile
 ### Things we learnt
 
 ### Stretch Goals
+
