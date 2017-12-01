@@ -6,6 +6,7 @@ const createUser = require('./queries/create_user');
 const setNewItem = require('./queries/set_new_item');
 const getCostsPerPerson = require('./queries/get_costs_per_person');
 const unpaidItems = require('./queries/unpaid_items.js');
+const markAsPaid = require('./queries/mark_as_paid');
 
 
 const homeHandler = (request, response) => {
@@ -75,8 +76,13 @@ const inputHandler = (request, response, endpoint) => {
 const sumAllHandler = (request, response) => {
     getCostsPerPerson((err, res) => {
         if (err) console.log(err)
-        response.writeHead(200, { 'content-type': 'application/json' })
-        response.end(JSON.stringify(res));
+          response.writeHead(200, { 'content-type': 'application/json' })
+          response.end(JSON.stringify(res));
+        markAsPaid((err, res) => {
+          if(err) console.log(err);
+            response.writeHead(200, { 'content-type': 'text/html' })
+            response.end('All items paid.');
+        });
     })
 }
 
