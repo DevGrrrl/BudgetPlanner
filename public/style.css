@@ -64,7 +64,7 @@ select,
 .dataContainer {
     display: flex;
     align-items: center;
-    /*width: 70%;*/
+    min-width: 60%;
     /*padding: 5%;*/
     padding:0;
     background-color: white;
