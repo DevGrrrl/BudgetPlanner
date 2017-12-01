@@ -60,12 +60,14 @@ select,
     opacity: 0.7;
 }
 
-.table {
+.item_container {
     border-spacing: 1em;
     font-size: 1rem;
+    overflow: scroll;
+    max-height: 70%;
 }
 
-.table tr:first-child {
+.item_container p {
     font-size: 1.2rem;
     font-weight: bold;
 }
