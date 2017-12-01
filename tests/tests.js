@@ -10,6 +10,7 @@ const setNewItem = require('../src/queries/set_new_item.js');
 const getUser = require('../src/queries/test_queries/test_get_user.js');
 const getItem = require('../src/queries/test_queries/test_get_item.js');
 const unpaidItems = require('../src/queries/unpaid_items');
+const markAsPaid = require('../src/queries/mark_as_paid');
 
 
 test('Tape is working', (t) => {
@@ -90,4 +91,18 @@ test('unpaidItems', (t) => {
             t.end();
         })
     })
+});
+
+test('markAsPaid', (t) => {
+    runDbBuild(function(err, res) {
+      markAsPaid((err, res) => {
+          if (err) console.log(err)
+          getItem((err, res)=> {
+            if(err) console.log(err);
+            console.log(res);
+            t.end();
+          })
+
+    })
+  })
 });
