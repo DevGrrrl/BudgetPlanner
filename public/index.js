@@ -33,17 +33,19 @@ function displayCurrentItems() {
     request('displayItems', 'GET', function(err, res) {
         if (err) console.log(err);
         clearDataContainer();
-        var table = document.createElement('div');
-        table.className = 'table';
+        var itemContainer = document.createElement('div');
+        itemContainer.className = 'item_container';
 
         res.forEach(function(item, i) {
             var date = new Date(res[i].date_purchased);
             var options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
             var line = document.createElement('p');
-            var concatItem = document.createTextNode(res[i].user_name + " spent " + "£" + Number(res[i].cost).toFixed(2)) + " on " + convertText(res[i].category)) + " on the " + date.toLocaleDateString('en-GB', options)));
+            var concatItem = document.createTextNode(res[i].user_name + " spent " + "£" + Number(res[i].cost).toFixed(2) + " on " + convertText(res[i].category) + " on the " + date.toLocaleDateString('en-GB', options));
             line.appendChild(concatItem);
+            itemContainer.appendChild(line);
         })
-        dataContainer.appendChild(table)
+        dataContainer.appendChild(itemContainer);
+
     })
 }
 
