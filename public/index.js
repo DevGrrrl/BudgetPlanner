@@ -33,31 +33,15 @@ function displayCurrentItems() {
     request('displayItems', 'GET', function(err, res) {
         if (err) console.log(err);
         clearDataContainer();
-        var table = document.createElement('table');
+        var table = document.createElement('div');
         table.className = 'table';
-        var tr = document.createElement('tr');
-        tr.appendChild(document.createElement('td'));
-        tr.appendChild(document.createElement('td'));
-        tr.appendChild(document.createElement('td'));
-        tr.appendChild(document.createElement('td'));
-        tr.cells[0].appendChild(document.createTextNode("Name"));
-        tr.cells[1].appendChild(document.createTextNode("Cost"));
-        tr.cells[2].appendChild(document.createTextNode("Category"));
-        tr.cells[3].appendChild(document.createTextNode("Date"));
-        table.appendChild(tr);
+
         res.forEach(function(item, i) {
             var date = new Date(res[i].date_purchased);
             var options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
-            var tr = document.createElement('tr');
-            tr.appendChild(document.createElement('td'));
-            tr.appendChild(document.createElement('td'));
-            tr.appendChild(document.createElement('td'));
-            tr.appendChild(document.createElement('td'));
-            tr.cells[0].appendChild(document.createTextNode(res[i].user_name));
-            tr.cells[1].appendChild(document.createTextNode("£" + Number(res[i].cost).toFixed(2)));
-            tr.cells[2].appendChild(document.createTextNode(convertText(res[i].category)));
-            tr.cells[3].appendChild(document.createTextNode(date.toLocaleDateString('en-GB', options)));
-            table.appendChild(tr);
+            var line = document.createElement('p');
+            var concatItem = document.createTextNode(res[i].user_name + " spent " + "£" + Number(res[i].cost).toFixed(2)) + " on " + convertText(res[i].category)) + " on the " + date.toLocaleDateString('en-GB', options)));
+            line.appendChild(concatItem);
         })
         dataContainer.appendChild(table)
     })
