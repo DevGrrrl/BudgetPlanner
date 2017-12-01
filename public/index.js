@@ -85,22 +85,18 @@ btn.addEventListener('click', function(event) {
     request('sumall', 'GET', function(err, res) {
         if (err) console.log(err);
         clearDataContainer();
-        var table = document.createElement('table');
-        table.className = 'table';
-        var tr = document.createElement('tr');
-        tr.appendChild(document.createElement('td'));
-        tr.appendChild(document.createElement('td'));
-        tr.cells[0].appendChild(document.createTextNode("Name"));
-        tr.cells[1].appendChild(document.createTextNode("Total spent"));
-        table.appendChild(tr);
+        var sum_container = document.createElement('div');
+        sum_container.className = 'item_container';
+          var heading=document.createElement('h3');
+          var headerText= document.createTextNode('Total user\'s spending');
+          heading.appendChild(headerText);
+          sum_container.appendChild(heading);
+
         res.forEach(function(item, i) {
-            var tr = document.createElement('tr');
-            tr.appendChild(document.createElement('td'));
-            tr.appendChild(document.createElement('td'));
-            tr.cells[0].appendChild(document.createTextNode(res[i].user_name));
-            tr.cells[1].appendChild(document.createTextNode("£" + Number(res[i].sum).toFixed(2)));
-            table.appendChild(tr);
+           var displaytext=document.createElement('p');
+          displaytext.appendChild(document.createTextNode(res[i].user_name+ " has spent a total of £" + Number(res[i].sum).toFixed(2)));
+            sum_container.appendChild(displaytext);
         })
-        dataContainer.appendChild(table)
+        dataContainer.appendChild(sum_container);
     })
 })
