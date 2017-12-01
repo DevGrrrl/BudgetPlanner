@@ -72,7 +72,12 @@ form.addEventListener('submit', function(event) {
     request('input', 'POST', function(err, res) {
         if (err) console.log(err);
         displayCurrentItems();
-    }, JSON.stringify(newItem))
+    }, JSON.stringify(newItem));
+
+    user.value = "";
+    category.value = "";
+    itemCost.value = "";
+    datePurchased.value = "";
 })
 
 btn.addEventListener('click', function(event) {
