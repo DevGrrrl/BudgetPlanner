@@ -28,4 +28,3 @@ We then moved on to planning out our software architecture, and did some detaile
 ### Things we learnt
 
 ### Stretch Goals
-
