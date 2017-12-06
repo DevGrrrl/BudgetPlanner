@@ -108,14 +108,14 @@ test('unpaidItems', (t) => {
 
 test('markAsPaid', (t) => {
     runDbBuild(function(err, res) {
-      markAsPaid((err, res) => {
-          if (err) console.log(err)
-          getItem((err, res)=> {
-            if(err) console.log(err);
-            console.log(res);
-            t.end();
-          })
+        markAsPaid((err, res) => {
+            if (err) console.log(err)
+            getItem((err, res) => {
+                if (err) console.log(err);
+                console.log(res);
+                t.end();
+            })
 
+        })
     })
-  })
 });
