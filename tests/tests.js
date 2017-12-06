@@ -11,6 +11,7 @@ const getUser = require('../src/queries/test_queries/test_get_user.js');
 const getItem = require('../src/queries/test_queries/test_get_item.js');
 const unpaidItems = require('../src/queries/unpaid_items');
 const markAsPaid = require('../src/queries/mark_as_paid');
+const getPassword = require('../src/queries/get_password');
 
 
 test('Tape is working', (t) => {
@@ -53,6 +54,8 @@ test('test createUser', (t) => {
     runDbBuild(function(err, res) {
         let userData = { username: 'Hannah', password: '123456' }
         createUser(userData, (err, res) => {
+          var stringed = (JSON.stringify(res));
+          console.log(JSON.parse(stringed)[0]);
             if (err) console.log(err)
             getUser((err, res) => {
                 t.equal(3, res.length, "Should be new row in users table (total 3)")
@@ -80,6 +83,16 @@ test('test setNewItem', (t) => {
     })
 });
 
+test('get password', (t) => {
+  runDbBuild(function(err, res) {
+    let userData = { username: 'Hannah', password: '123' };
+    getPassword((err, res) => {
+      if (err) console.log(err)
+      t.equal('123456', res, 'Should return users stored password from the database');
+      t.end();
+    })
+  })
+});
 
 
 test('unpaidItems', (t) => {

@@ -43,7 +43,7 @@ const staticFileHandler = (request, response, endpoint) => {
     })
 };
 
-const signupHandler = (request, response, endpoint) => {
+const signUpHandler = (request, response, endpoint) => {
   var allTheData = '';
   request.on('data', (chunckOfData) => {
       allTheData += chunckOfData;
@@ -51,20 +51,46 @@ const signupHandler = (request, response, endpoint) => {
   request.on('end', () => {
       const userData = JSON.parse(allTheData);
 
-  //hash and validate here
+  //validate & hash here
 
       checkUser(userData, (err, res) => {
           if (err) console.log(err)
           if (res === 0) {
               createUser(userData, (err, res) => {
                   if (err) console.log(err)
-                  const cookie = sign(JSON.stringify(res), SECRET);
+                  let stringed = (JSON.stringify(res));
+                  stringed = JSON.parse(stringed)[0];
+                  const cookie = sign(stringed, SECRET);
                     res.writeHead(302,{'Location': '/','Set-Cookie': `jwt=${cookie}; HttpOnly`});
+                    res.end();
                 }
               }
-            }
-      response.end();
+            } else if (res === 1) {
+            res.writeHead(202, { 'content-type': 'text/html' })
+            res.end(`username: ${userData.username} already exists, try logging in`);
+        }
     }
+
+const loginHandler = (request, response, endpoint) => {
+  var allTheData = '';
+  request.on('data', (chunckOfData) => {
+      allTheData += chunckOfData;
+  });
+  request.on('end', () => {
+      const userData = JSON.parse(allTheData);
+
+    //validate & hash here
+    checkUser(userData, (err, res) => {
+        if (err) console.log(err)
+        if (res === 0) {
+          res.writeHead(202, { 'content-type': 'text/html' })
+          res.end(`username: ${userData.username} doesn\'t exist, please sign up`);
+        } else if (res !== 0) {
+          getPassword(userData, (err, res) => {
+            if (err) console.log(err)
+          })
+        }
+}
 
 
 const addItemHandler = (request, response, endpoint) => {
@@ -108,4 +134,4 @@ const displayItemsHandler = (request, response) => {
     })
 }
 
-module.exports = { homeHandler, staticFileHandler, inputHandler, sumAllHandler, displayItemsHandler }
+module.exports = { homeHandler, staticFileHandler, signUpHandler, loginHandler, logoutHandler, addItemHandler, sumAllHandler, displayItemsHandler}
