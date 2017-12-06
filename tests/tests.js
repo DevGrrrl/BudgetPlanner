@@ -51,8 +51,8 @@ test('test checkUser', (t) => {
 
 test('test createUser', (t) => {
     runDbBuild(function(err, res) {
-        let newItem = { username: 'Hannah' }
-        createUser(newItem, (err, res) => {
+        let userData = { username: 'Hannah', password: '123456' }
+        createUser(userData, (err, res) => {
             if (err) console.log(err)
             getUser((err, res) => {
                 t.equal(3, res.length, "Should be new row in users table (total 3)")

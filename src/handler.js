@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const querystring = require('querystring');
+const { parse } = require('cookie');
+const { sign, verify } = require('jsonwebtoken');
 const checkUser = require('./queries/check_user');
 const createUser = require('./queries/create_user');
 const setNewItem = require('./queries/set_new_item');
@@ -41,7 +43,31 @@ const staticFileHandler = (request, response, endpoint) => {
     })
 };
 
-const inputHandler = (request, response, endpoint) => {
+const signupHandler = (request, response, endpoint) => {
+  var allTheData = '';
+  request.on('data', (chunckOfData) => {
+      allTheData += chunckOfData;
+  });
+  request.on('end', () => {
+      const userData = JSON.parse(allTheData);
+
+  //hash and validate here
+
+  checkUser(userData, (err, res) => {
+      if (err) console.log(err)
+      if (res === 0) {
+          createUser(userData, (err, res) => {
+              if (err) console.log(err)
+              const cookie = sign(JSON.stringify(res), SECRET);
+                   res.writeHead(302,{'Location': '/','Set-Cookie': `jwt=${cookie}; HttpOnly`});
+            }
+          }
+        }
+        response.end();
+      }
+
+
+const addItemHandler = (request, response, endpoint) => {
     var allTheData = '';
     request.on('data', (chunckOfData) => {
         allTheData += chunckOfData;
@@ -49,27 +75,14 @@ const inputHandler = (request, response, endpoint) => {
     request.on('end', () => {
         const newItem = JSON.parse(allTheData);
         console.log(newItem);
-        checkUser(newItem, (err, res) => {
+        setNewItem(newItem, (err, res) => {
             if (err) console.log(err)
-            if (res === 0) {
-                createUser(newItem, (err, res) => {
-                    if (err) console.log(err)
-                    setNewItem(newItem, (err, res) => {
-                        if (err) console.log(err)
-                        response.writeHead(200, { 'content-type': 'application/json' })
-                        response.writeHead(200, { 'location': '/' })
-                        response.end(JSON.stringify(res));
-                    })
-                })
-            } else if (res === 1) {
-                setNewItem(newItem, (err, res) => {
-                    if (err) console.log(err)
-                    response.writeHead(200, { 'content-type': 'application/json' })
-                    response.writeHead(200, { 'location': '/' })
-                    response.end(JSON.stringify(res));
-                })
-            }
-        })
+            response.writeHead(200, { 'content-type': 'application/json' })
+            response.writeHead(200, { 'location': '/' })
+            response.end(JSON.stringify(res));
+            })
+          })
+        }
     })
 };
 

@@ -5,7 +5,8 @@ DROP TABLE IF EXISTS items CASCADE;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    user_name VARCHAR(50) NOT NULL
+    user_name VARCHAR(50) NOT NULL,
+    password VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE items (
