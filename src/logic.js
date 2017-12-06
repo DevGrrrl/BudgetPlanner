@@ -1,4 +1,5 @@
-var validator = require('validator');
+const validator = require('validator');
+const bcrypt = require('bcryptjs');
 
 const validateUser = userObj => {
     if (!validator.isAlphanumeric(userObj.username)) {
@@ -10,10 +11,37 @@ const validateUser = userObj => {
     }
 }
 
-/* Hash function takes object, returns object but with password hashed*/
+/* User object is updated with password hashed*/
+
+const genHashedPassword = (userObj, callback) => {
+    bcrypt.genSalt(10, (err, salt) => {
+        if (err) {
+            callback(err)
+        } else {
+            bcrypt.hash(userObj.password, salt, (err, hash) => {
+                if (err) {
+                    callback(err)
+                } else {
+                    userObj.password = hash;
+                    callback(null, userObj);
+                }
+            });
+        }
+    })
+}
+
+/* res = true if passwords match, else false*/
+
+const comparePasswords = (userObj, databasePassword, callback) => {
+    bcrypt.compare(userObj.password, databasePassword, (err, res) => {
+        if (err) {
+            callback(err)
+        } else {
+            callback(null, res)
+        }
+    });
+}
 
 
 
-
-
-module.exports = { validateUser };
+module.exports = { validateUser, genHashedPassword, comparePasswords };
