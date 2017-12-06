@@ -8,6 +8,7 @@
     },
     "scripts": {
         "test": "NODE_ENV=test node tests/tests.js | tap-spec",
+        "test_logic": "node tests/logic_tests.js | tap-spec",
         "dev": "nodemon src/server.js",
         "start": "node src/server.js"
     },
@@ -31,7 +32,7 @@
         "env2": "^2.2.0"
     },
     "dependencies": {
-
-        "pg": "^7.4.0"
+        "pg": "^7.4.0",
+        "validator": "^9.1.2"
     }
 }
