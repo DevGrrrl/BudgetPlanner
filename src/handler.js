@@ -53,18 +53,18 @@ const signupHandler = (request, response, endpoint) => {
 
   //hash and validate here
 
-  checkUser(userData, (err, res) => {
-      if (err) console.log(err)
-      if (res === 0) {
-          createUser(userData, (err, res) => {
-              if (err) console.log(err)
-              const cookie = sign(JSON.stringify(res), SECRET);
-                   res.writeHead(302,{'Location': '/','Set-Cookie': `jwt=${cookie}; HttpOnly`});
+      checkUser(userData, (err, res) => {
+          if (err) console.log(err)
+          if (res === 0) {
+              createUser(userData, (err, res) => {
+                  if (err) console.log(err)
+                  const cookie = sign(JSON.stringify(res), SECRET);
+                    res.writeHead(302,{'Location': '/','Set-Cookie': `jwt=${cookie}; HttpOnly`});
+                }
+              }
             }
-          }
-        }
-        response.end();
-      }
+      response.end();
+    }
 
 
 const addItemHandler = (request, response, endpoint) => {
