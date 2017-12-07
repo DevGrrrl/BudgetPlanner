@@ -6,28 +6,34 @@
   <title>Login Page</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/public/login.css">
+  <link rel="stylesheet" href="./login.css">
   <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
 </head>
 
 <body>
  <!-- form uses the name attribute of each element to create an object property key pair -->
+<div class= "signup-container">
  <h2>Signup</h2>
-  <form class="signup" id="form-signup" action="/signup" method="post">
+  <form class="signup" id="form-signup" onsubmit="return checkPassword()" action="signup" method="post">
     <input type="text" name="username" value="" placeholder="Name" pattern="[a-zA-Z0-9]+" required>
-    <input type="password" name="password" value="" placeholder="Password" pattern="(?=.\d)(?=.[a-z])(?=.*[A-Z]).{6,}"required>
-    <input type="password" name="password2" value="" placeholder="Confirm password" required>
-    <input type="Submit"   value="Submit" >
+    <input type="password" id="signupPW1" name="password" value="" placeholder="Password" pattern="[a-zA-Z0-9]{8}" required>
+    <input type="password" id="signupPW2" name="password2" value="" placeholder="Confirm password" pattern="[a-zA-Z0-9]{8}" required>
+    <input type="Submit" value="Submit" >
   </form>
+  <div class="" id="validateMsgSignup"></div>
+</div>
+
+<div class = "login-container">
 <h2>Login</h2>
-  <form class="login" id="form-login" action="/login" method="post">
+  <form class="login" id="form-login" action="login" method="post">
     <input type="text" name="username" value="" placeholder="Name" pattern="[a-zA-Z0-9]+" required>
-    <input type="password" name="password" value="" placeholder="Password" required>
+    <input type="password" name="password" value="" placeholder="Password" pattern="[a-zA-Z0-9]{8}" required>
    <input type="Submit"   value="Submit" >
   </form>
-  <script type="text/javascript" src="/public/index.js">
+  <div class="" id="validateMsgSignup"></div>
+</div>
 
-  </script>
+  <script src="./login.js"></script>
 </body>
 
 </html>
