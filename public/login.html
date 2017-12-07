@@ -14,7 +14,7 @@
  <!-- form uses the name attribute of each element to create an object property key pair -->
 <div class= "signup-container">
  <h2>Signup</h2>
-  <form class="signup" id="form-signup" onsubmit="return checkPassword()" action="signup" method="post">
+  <form class="signup" id="form-signup" onsubmit="return checkPassword()" action="signup" method="POST">
     <input type="text" name="username" value="" placeholder="Name" pattern="[a-zA-Z0-9]+" required>
     <input type="password" id="signupPW1" name="password" value="" placeholder="Password" pattern="[a-zA-Z0-9]{8,}" required>
     <input type="password" id="signupPW2" name="password2" value="" placeholder="Confirm password" pattern="[a-zA-Z0-9]{8,}" required>
@@ -25,7 +25,7 @@
 
 <div class = "login-container">
 <h2>Login</h2>
-  <form class="login" id="form-login" action="login" method="post">
+  <form class="login" id="form-login" action="login" method="POST">
     <input type="text" name="username" value="" placeholder="Name" pattern="[a-zA-Z0-9]+" required>
     <input type="password" name="password" value="" placeholder="Password" pattern="[a-zA-Z0-9]{8,}" required>
    <input type="Submit"   value="Submit" >
