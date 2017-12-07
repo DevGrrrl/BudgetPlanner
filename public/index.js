@@ -70,12 +70,11 @@ form.addEventListener('submit', function(event) {
         cost: itemCost.value,
         date: datePurchased.value
     }
-    request('input', 'POST', function(err, res) {
+    request('add', 'POST', function(err, res) {
         if (err) console.log(err);
         displayCurrentItems();
     }, JSON.stringify(newItem));
 
-    user.value = ""; //need to get username from cookie
     category.value = "";
     itemCost.value = "";
     datePurchased.value = "";
