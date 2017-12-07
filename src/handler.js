@@ -14,20 +14,34 @@ const getUserId = require('./queries/get_user_id');
 const { validateUser, genHashedPassword, comparePasswords } = require('./logic');
 
 const homeHandler = (request, response) => {
-    fs.readFile(path.join(__dirname, '..', 'public', 'login.html'), 'utf8', (err, file) => {
-        if (err) {
-            response.writeHead(500, {
-                'content-type': 'text/plain'
-            })
-            response.end('Server error');
-        } else {
-            response.writeHead(200, {
-                'content-type': 'text/html'
-            })
-            response.end(file);
-        };
+    if (request.headers.cookie) {
+        let cookies = cookieModule.parse(request.headers.cookie);
+        verify(cookies.jwt, process.env.SECRET, function(err, decoded) {
+            if (err) {
+                response.writeHead(500, { 'content-type': 'text/html' });
+                response.end('Oops! There was a problem');
+            } else {
+                console.log('xxx')
+                response.writeHead(302, { 'Location': '/main' });
+                response.end();
+            }
+        });
+    } else {
+        fs.readFile(path.join(__dirname, '..', 'public', 'login.html'), 'utf8', (err, file) => {
+            if (err) {
+                response.writeHead(500, {
+                    'content-type': 'text/plain'
+                })
+                response.end('Server error');
+            } else {
+                response.writeHead(200, {
+                    'content-type': 'text/html'
+                })
+                response.end(file);
+            };
 
-    })
+        })
+    }
 };
 
 
@@ -47,21 +61,6 @@ const mainPageHandler = (request, response) => {
 
     })
 };
-
-const authCheckHandler = (request, response) => {
-    if (request.headers.cookie) {
-        let cookies = cookieModule.parse(request.headers.cookie);
-        verify(cookies.jwt, process.env.SECRET, function(err, decoded) {
-            if (err) {
-                response.writeHead(500, { 'content-type': 'text/html' });
-                response.end('Oops! There was a problem');
-            } else {
-                response.writeHead(201, { 'Location': '/main' });
-                response.end();
-            }
-        });
-    }
-}
 
 const staticFileHandler = (request, response, endpoint) => {
     const extensionType = {
@@ -242,4 +241,4 @@ const logoutHandler = (request, response) => {
     response.end('working');
 }
 
-module.exports = { homeHandler, mainPageHandler, authCheckHandler, staticFileHandler, signUpHandler, loginHandler, logoutHandler, addItemHandler, sumAllHandler, displayItemsHandler }
+module.exports = { homeHandler, mainPageHandler, staticFileHandler, signUpHandler, loginHandler, logoutHandler, addItemHandler, sumAllHandler, displayItemsHandler }

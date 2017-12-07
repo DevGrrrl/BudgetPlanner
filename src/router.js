@@ -1,4 +1,4 @@
-const { homeHandler, staticFileHandler, signUpHandler, loginHandler, mainPageHandler, authCheckHandler, logoutHandler, addItemHandler, sumAllHandler, displayItemsHandler } = require('./handler');
+const { homeHandler, staticFileHandler, signUpHandler, loginHandler, mainPageHandler, logoutHandler, addItemHandler, sumAllHandler, displayItemsHandler } = require('./handler');
 
 const router = (request, response) => {
 
