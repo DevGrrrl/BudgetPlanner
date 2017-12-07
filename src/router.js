@@ -8,16 +8,15 @@ const router = (request, response) => {
     } else if (endpoint.includes("public")) {
         staticFileHandler(request, response, endpoint);
     } else if (endpoint.includes("signup")){
-        signUpHandler(request, response, endpoint);
+        signUpHandler(request, response);
     } else if (endpoint.includes("login")){
-        loginHandler(request, response, endpoint);
+        loginHandler(request, response);
     } else if (endpoint.includes("logout")){
-        logoutHandler(request, response, endpoint);
+        logoutHandler(request, response);
     } else if (endpoint.includes("/main")) {
         mainPageHandler(request, response);
-    }
-      else if (endpoint.includes("add")) {
-        addItemHandler(request, response, endpoint);
+    } else if (endpoint.includes("add")) {
+        addItemHandler(request, response);
     } else if (endpoint.includes("sumall")) {
         sumAllHandler(request, response);
     } else if (endpoint.includes("displayItems")) {

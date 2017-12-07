@@ -67,7 +67,7 @@ test('test createUser', (t) => {
 test('test setNewItem', (t) => {
     runDbBuild(function(err, res) {
         let newItem = {
-            username: 'Alina',
+            userId: 1,
             cost: 2.45,
             category: 'Groceries',
             date: new Date('2017-11-29'),
