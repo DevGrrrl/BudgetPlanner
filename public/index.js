@@ -7,8 +7,6 @@ var datePurchased = document.getElementById('date');
 var btn = document.getElementById('generateCost');
 var dataContainer = document.getElementById('data_container');
 
-
-
 window.onload = function() {
     displayCurrentItems();
 };
@@ -66,7 +64,6 @@ convertText('bill-payments')
 form.addEventListener('submit', function(event) {
     event.preventDefault();
     var newItem = {
-        username: user.value,
         category: category.value,
         cost: itemCost.value,
         date: datePurchased.value
@@ -76,7 +73,7 @@ form.addEventListener('submit', function(event) {
         displayCurrentItems();
     }, JSON.stringify(newItem));
 
-    user.value = "";
+    user.value = ""; //need to get username from cookie
     category.value = "";
     itemCost.value = "";
     datePurchased.value = "";

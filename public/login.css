@@ -1,0 +1,32 @@
+body {
+  display: flex;
+  flex-direction: row;
+  font-family: 'Quicksand', sans-serif;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  background-image: url(./kittysplitter.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.signup-container , .login-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  min-height: 100vh;
+  overflow: auto;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 3rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 80%;
+}
+
+input[type="submit"] {
+  width: 30%;
+  align-self: center;
+}
