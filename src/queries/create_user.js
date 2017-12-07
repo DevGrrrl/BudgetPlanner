@@ -6,7 +6,7 @@ const createUser = (userData, cb) => {
             if (err) {
                 return cb(err);
             } else {
-                cb(null, res.rows);
+                cb(null, JSON.stringify(res.rows[0]));
             }
         }
     );

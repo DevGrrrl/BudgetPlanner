@@ -25,7 +25,6 @@ test('getCostPerPerson', (t) => {
         let expected = [{ user_name: 'Alina', sum: 9.3 }, { user_name: 'James', sum: 8.26 }];
         getCostPerPerson((err, res) => {
             if (err) console.log(err)
-            console.log(res)
             t.deepEqual(expected, res, 'Should return summed cost per person')
             t.end();
         })
@@ -54,8 +53,7 @@ test('test createUser', (t) => {
     runDbBuild(function(err, res) {
         let userData = { username: 'Hannah', password: '123456' }
         createUser(userData, (err, res) => {
-          var stringed = (JSON.stringify(res));
-          console.log(JSON.parse(stringed)[0]);
+            var stringed = (JSON.stringify(res));
             if (err) console.log(err)
             getUser((err, res) => {
                 t.equal(3, res.length, "Should be new row in users table (total 3)")
@@ -84,14 +82,14 @@ test('test setNewItem', (t) => {
 });
 
 test('get password', (t) => {
-  runDbBuild(function(err, res) {
-    let userData = { username: 'Hannah', password: '123' };
-    getPassword((err, res) => {
-      if (err) console.log(err)
-      t.equal('123456', res, 'Should return users stored password from the database');
-      t.end();
+    runDbBuild(function(err, res) {
+        let userData = { username: 'Alina' };
+        getPassword(userData, (err, res) => {
+            if (err) console.log(err)
+            t.equal('$2a$10$8c8tk6wqxvUgSsweOmHUO.JA95Jpf02crXTWAetJEr4IinXL3zxEG', res, 'Should return users stored password from the database');
+            t.end();
+        })
     })
-  })
 });
 
 

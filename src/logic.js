@@ -2,11 +2,9 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
 const validateUser = userObj => {
-
     if (!validator.isAlphanumeric(userObj.username)) {
         return new Error('Username should only contain alphanumeric characters');
     } else if (!validator.matches(userObj.password, /[a-zA-Z0-9]{8,}/)) {
-
         return new Error('Password should only contain letters and numbers, and should be at least 8 characters long');
     } else {
         return true
