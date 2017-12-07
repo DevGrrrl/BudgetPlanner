@@ -12,7 +12,7 @@ const router = (request, response) => {
     } else if (endpoint.includes("login")){
         loginHandler(request, response, endpoint);
     } else if (endpoint.includes("logout")){
-        logoutHandler(request, response, endpoint);
+        logoutHandler(request, response);
     } else if (endpoint.includes("/main")) {
         mainPageHandler(request, response);
     }

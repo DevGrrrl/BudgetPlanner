@@ -215,7 +215,8 @@ const displayItemsHandler = (request, response) => {
 }
 
 const logoutHandler = (request, response) => {
-
+    response.writeHead(201, { 'location': '/', 'Set-Cookie': 'jwt=0; Max-Age=0' });
+    response.end('working');
 }
 
 module.exports = { homeHandler, mainPageHandler, staticFileHandler, signUpHandler, loginHandler, logoutHandler, addItemHandler, sumAllHandler, displayItemsHandler }

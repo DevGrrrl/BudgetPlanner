@@ -5,6 +5,7 @@ var category = document.getElementById('category');
 var itemCost = document.getElementById('cost');
 var datePurchased = document.getElementById('date');
 var btn = document.getElementById('generateCost');
+var logoutBtn = document.getElementById('logout');
 var dataContainer = document.getElementById('data_container');
 
 window.onload = function() {
@@ -17,6 +18,7 @@ function request(url, method, cb, body) {
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
+              console.log('what', JSON.parse(xhr.responseText))
                 cb(null, JSON.parse(xhr.responseText));
             } else {
                 var errorMessage = JSON.parse(xhr.responseText);
@@ -100,3 +102,14 @@ btn.addEventListener('click', function(event) {
         dataContainer.appendChild(sum_container);
     })
 })
+
+logoutBtn.addEventListener('click', function(event){
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function (){
+     if(xhr.readyState === 4 && xhr.status === 201){
+       window.location.href = xhr.getResponseHeader('location');
+     }
+  }
+  xhr.open('GET', 'logout', true);
+  xhr.send();
+  })
