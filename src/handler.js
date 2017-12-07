@@ -10,6 +10,7 @@ const getCostsPerPerson = require('./queries/get_costs_per_person');
 const unpaidItems = require('./queries/unpaid_items.js');
 const markAsPaid = require('./queries/mark_as_paid');
 const getPassword = require('./queries/get_password');
+const getUserId = require('./queries/get_user_id');
 const { validateUser, genHashedPassword, comparePasswords } = require('./logic');
 
 const homeHandler = (request, response) => {
@@ -78,7 +79,7 @@ const signUpHandler = (request, response) => {
                                 } else {
                                     let userIdName = JSON.parse(res);
                                     const cookie = sign(userIdName, process.env.SECRET);
-                                    response.writeHead(302, { 'Location': '/', 'Set-Cookie': `jwt=${cookie}; HttpOnly` });
+                                    response.writeHead(302, { 'Location': 'main', 'Set-Cookie': `jwt=${cookie}; HttpOnly` });
                                     response.end('You have succesfully signed in');
                                 }
                             });
@@ -101,7 +102,6 @@ const loginHandler = (request, response) => {
     });
     request.on('end', () => {
         const userData = querystring.parse(JSON.parse(JSON.stringify(allTheData)));
-        console.log(userData)
         if (validateUser(userData) === true) {
             checkUser(userData, (err, res) => {
                 if (err) {
@@ -126,7 +126,17 @@ const loginHandler = (request, response) => {
                                         response.end(`Password is incorrect, please try again or sign up`);
                                     }
                                     if (res === true) {
-                                        // get username / id and set cookie
+                                        getUserId(userData, (err, res) => {
+                                            if (err) {
+                                                response.writeHead(500, { 'content-type': 'text/html' });
+                                                response.end('Oops! There was a problem');
+                                            } else {
+                                                let userIdName = JSON.parse(res);
+                                                const cookie = sign(userIdName, process.env.SECRET);
+                                                response.writeHead(302, { 'Location': 'main', 'Set-Cookie': `jwt=${cookie}; HttpOnly` });
+                                                response.end('You have succesfully signed in');
+                                            }
+                                        })
                                     }
                                 }
                             })
@@ -136,7 +146,9 @@ const loginHandler = (request, response) => {
                 }
             })
         } else {
-            //WRITE ERROR HERE
+            let error = validateUser(userData).message;
+            response.writeHead(401, { 'content-type': 'text/html' })
+            response.end(error);
         }
     })
 }
