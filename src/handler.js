@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const querystring = require('querystring');
-// const { parse } = require('cookie');
-const { sign, verify } = require('jsonwebtoken');
+const cookieModule = require('cookie');
+const { sign, verify, decode } = require('jsonwebtoken');
 const checkUser = require('./queries/check_user');
 const createUser = require('./queries/create_user');
 const setNewItem = require('./queries/set_new_item');
@@ -174,18 +174,27 @@ const loginHandler = (request, response) => {
 
 
 
-const addItemHandler = (request, response, endpoint) => {
+const addItemHandler = (request, response) => {
     let allTheData = '';
     request.on('data', (chunckOfData) => {
         allTheData += chunckOfData;
     });
     request.on('end', () => {
         const newItem = JSON.parse(allTheData);
-        // console.log('newItem' ,newItem);
-        setNewItem(newItem, (err, res) => {
+        let cookies = cookieModule.parse(request.headers.cookie);
+        let decoded = decode(cookies.jwt);
+
+        let itemObj = {
+          userId : decoded.id,
+          cost : newItem.cost,
+          category: newItem.category,
+          date: newItem.date
+        }
+
+        setNewItem(itemObj, (err, res) => {
             if (err) console.log(err)
             response.writeHead(200, { 'content-type': 'application/json' })
-            response.writeHead(200, { 'location': '/' })
+            response.writeHead(200, { 'location': 'main' })
             response.end(JSON.stringify(res));
         })
     })
