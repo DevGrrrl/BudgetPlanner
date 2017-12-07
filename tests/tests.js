@@ -12,6 +12,7 @@ const getItem = require('../src/queries/test_queries/test_get_item.js');
 const unpaidItems = require('../src/queries/unpaid_items');
 const markAsPaid = require('../src/queries/mark_as_paid');
 const getPassword = require('../src/queries/get_password');
+const getUserId = require('../src/queries/get_user_id');
 
 
 test('Tape is working', (t) => {
@@ -87,6 +88,18 @@ test('get password', (t) => {
         getPassword(userData, (err, res) => {
             if (err) console.log(err)
             t.equal('$2a$10$8c8tk6wqxvUgSsweOmHUO.JA95Jpf02crXTWAetJEr4IinXL3zxEG', res, 'Should return users stored password from the database');
+            t.end();
+        })
+    })
+});
+
+test('get user id', (t) => {
+    runDbBuild(function(err, res) {
+        let userData = { username: 'Alina' };
+        getUserId(userData, (err, res) => {
+            console.log(res);
+            if (err) console.log(err)
+            t.equal({ "user_name": "Alina", "id": 1 }, res, 'Should return user name and user id');
             t.end();
         })
     })
