@@ -29,6 +29,25 @@ const homeHandler = (request, response) => {
     })
 };
 
+
+const mainPageHandler = (request, response) => {
+    fs.readFile(path.join(__dirname, '..', 'public', 'index.html'), 'utf8', (err, file) => {
+        if (err) {
+            response.writeHead(500, {
+                'content-type': 'text/plain'
+            })
+            response.end('Server error');
+        } else {
+            response.writeHead(200, {
+                'content-type': 'text/html'
+            })
+            response.end(file);
+        };
+
+    })
+};
+
+
 const staticFileHandler = (request, response, endpoint) => {
     const extensionType = {
         html: 'text/html',
@@ -78,8 +97,8 @@ const signUpHandler = (request, response) => {
                                 } else {
                                     let userIdName = JSON.parse(res);
                                     const cookie = sign(userIdName, process.env.SECRET);
-                                    response.writeHead(302, { 'Location': '/', 'Set-Cookie': `jwt=${cookie}; HttpOnly` });
-                                    response.end('You have succesfully signed in');
+                                    response.writeHead(302, { 'Location': '/main', 'Set-Cookie': `jwt=${cookie}; HttpOnly` });
+                                    response.end();
                                 }
                             });
                         }
@@ -187,4 +206,4 @@ const logoutHandler = (request, response) => {
 
 }
 
-module.exports = { homeHandler, staticFileHandler, signUpHandler, loginHandler, logoutHandler, addItemHandler, sumAllHandler, displayItemsHandler }
+module.exports = { homeHandler, mainPageHandler, staticFileHandler, signUpHandler, loginHandler, logoutHandler, addItemHandler, sumAllHandler, displayItemsHandler }
