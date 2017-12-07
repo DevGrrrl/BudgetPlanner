@@ -1,4 +1,4 @@
-const { homeHandler, staticFileHandler, signUpHandler, loginHandler, mainPageHandler, logoutHandler, addItemHandler, sumAllHandler, displayItemsHandler } = require('./handler');
+const { homeHandler, staticFileHandler, signUpHandler, loginHandler, mainPageHandler, authCheckHandler, logoutHandler, addItemHandler, sumAllHandler, displayItemsHandler } = require('./handler');
 
 const router = (request, response) => {
 
@@ -7,11 +7,13 @@ const router = (request, response) => {
         homeHandler(request, response);
     } else if (endpoint.includes("public")) {
         staticFileHandler(request, response, endpoint);
-    } else if (endpoint.includes("signup")){
+    } else if (endpoint.includes("auth_check")) {
+        authCheckHandler(request, response);
+    } else if (endpoint.includes("signup")) {
         signUpHandler(request, response);
-    } else if (endpoint.includes("login")){
+    } else if (endpoint.includes("login")) {
         loginHandler(request, response);
-    } else if (endpoint.includes("logout")){
+    } else if (endpoint.includes("logout")) {
         logoutHandler(request, response);
     } else if (endpoint.includes("/main")) {
         mainPageHandler(request, response);
