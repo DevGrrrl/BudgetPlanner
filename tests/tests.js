@@ -112,7 +112,7 @@ test('markAsPaid', (t) => {
             if (err) console.log(err)
             getItem((err, res) => {
                 if (err) console.log(err);
-                console.log(res);
+
                 t.end();
             })
 

@@ -10,6 +10,7 @@ const router = (request, response) => {
     } else if (endpoint.indexOf("signup") !== -1){
         signUpHandler(request, response, endpoint);
     } else if (endpoint.indexOf("login") !== -1){
+
         loginHandler(request, response, endpoint);
     } else if (endpoint.indexOf("logout") !== -1){
         logoutHandler(request, response, endpoint);

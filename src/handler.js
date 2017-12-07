@@ -12,7 +12,7 @@ const markAsPaid = require('./queries/mark_as_paid');
 const { validateUser, genHashedPassword, comparePasswords } = require('./logic');
 
 const homeHandler = (request, response) => {
-    fs.readFile(path.join(__dirname, '..', 'public', 'index.html'), 'utf8', (err, file) => {
+    fs.readFile(path.join(__dirname, '..', 'public', 'login.html'), 'utf8', (err, file) => {
         if (err) {
             response.writeHead(500, {
                 'content-type': 'text/plain'
@@ -48,16 +48,17 @@ const signUpHandler = (request, response) => {
   let allTheData = '';
   request.on('data', (chunckOfData) => {
       allTheData += chunckOfData;
+
   });
+
   request.on('end', () => {
-      const userData = JSON.parse(allTheData);
+   const userData = querystring.parse(JSON.parse(JSON.stringify(allTheData)));
 
-
-  if(validateUser(userData)){
+  if(validateUser(userData) === true){
       checkUser(userData, (err, res) => {
           if (err) {
             response.writeHead(500, { 'content-type': 'text/html'});
-            response.end('Oops! There was a problem');
+            response.end('Oops! There was a problem 1');
           } else if (res === 1){
               response.writeHead(401, { 'content-type': 'text/html' })
               response.end(`username: ${userData.username} already exists, try logging in`);
@@ -65,17 +66,18 @@ const signUpHandler = (request, response) => {
               genHashedPassword(userData, (err, result) => {
                 if (err){
                   response.writeHead(500, { 'content-type': 'text/html'});
-                  response.end('Oops! There was a problem');
+                  response.end('Oops! There was a problem 2');
                 } else {
                     createUser(result, (err, res) => {
+
                         if (err) {
                           response.writeHead(500, { 'content-type': 'text/html'});
-                          response.end('Oops! There was a problem');
+                          response.end('Oops! There was a problem 3');
                         } else {
                           let stringed = (JSON.stringify(res));
                           stringed = JSON.parse(stringed)[0];
-                          console.log(stringed);
-                          const cookie = sign(stringed, SECRET);
+
+                          const cookie = sign(stringed, process.env.SECRET);
                             response.writeHead(302,{'Location': '/','Set-Cookie': `jwt=${cookie}; HttpOnly`});
                             response.end('You have succesfully signed in');
                       }
@@ -105,13 +107,13 @@ const loginHandler = (request, response, endpoint) => {
 
     //validate & hash here
     checkUser(userData, (err, res) => {
-        if (err) console.log(err)
+        if (err) console.log('error ', err)
         if (res === 0) {
           res.writeHead(202, { 'content-type': 'text/html' })
           res.end(`username: ${userData.username} doesn\'t exist, please sign up`);
         } else if (res !== 0) {
           getPassword(userData, (err, res) => {
-            if (err) console.log(err)
+            if (err) console.log('error ', err)
           })
         }
       })
@@ -126,7 +128,7 @@ const addItemHandler = (request, response, endpoint) => {
     });
     request.on('end', () => {
         const newItem = JSON.parse(allTheData);
-        console.log(newItem);
+        // console.log('newItem' ,newItem);
         setNewItem(newItem, (err, res) => {
             if (err) console.log(err)
             response.writeHead(200, { 'content-type': 'application/json' })
