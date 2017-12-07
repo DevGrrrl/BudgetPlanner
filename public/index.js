@@ -7,6 +7,8 @@ var datePurchased = document.getElementById('date');
 var btn = document.getElementById('generateCost');
 var dataContainer = document.getElementById('data_container');
 
+
+
 window.onload = function() {
     displayCurrentItems();
 };
