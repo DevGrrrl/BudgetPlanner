@@ -1,6 +1,6 @@
 body {
-  display: flex;
-  flex-direction: row;
+  /*display: flex;
+  flex-direction: row;*/
   font-family: 'Quicksand', sans-serif;
   width: 100vw;
   margin: 0;
@@ -10,7 +10,7 @@ body {
   background-size: cover;
 }
 
-.signup-container , .login-container {
+/*.signup-container , .login-container {
   display: flex;
   flex-direction: column;
   width: 50%;
@@ -18,15 +18,60 @@ body {
   overflow: auto;
   background: rgba(255, 255, 255, 0.85);
   padding: 3rem;
+}*/
+.signup-container , .login-container {
+
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 1.5rem;
+    margin: auto;
+    /* width: 80%; */
+    min-height: 50vh;
+    overflow: auto;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 0 10%;
+
 }
+/*form {
+  display: flex;
+  flex-direction: column;
+  max-width: 80%;
+}*/
 
 form {
   display: flex;
   flex-direction: column;
-  max-width: 80%;
+  max-width: 100%;
+}
+
+/*mobile*/
+input {
+  margin:2%;
+  padding:2%;
+  font-size: 1rem;
+  background-color: white;
 }
 
 input[type="submit"] {
   width: 30%;
   align-self: center;
+}
+
+/*desktop css below*/
+@media  screen and (min-width: 550px)  {
+
+  body {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .signup-container , .login-container {
+    width: 50%;
+    min-height: 100vh;
+    padding: 3rem;
+  }
+form {
+    max-width: 80%;
+}
 }
