@@ -8,7 +8,6 @@ var formSubmit = document.getElementById('form-signup');
 
 
 formSubmit.addEventListener('submit', function(event){
-  function checkPassword(){
     if (validateSignup.childElementCount > 0) {
       validateSignup.removeChild(validateSignup.lastChild);
     }
@@ -21,5 +20,4 @@ formSubmit.addEventListener('submit', function(event){
   return false;
   }
   return true;
-  }
 })
