@@ -48,6 +48,20 @@ const mainPageHandler = (request, response) => {
     })
 };
 
+const authCheckHandler = (request, response) => {
+    if (request.headers.cookie) {
+        let cookies = cookieModule.parse(request.headers.cookie);
+        verify(cookies.jwt, process.env.SECRET, function(err, decoded) {
+            if (err) {
+                response.writeHead(500, { 'content-type': 'text/html' });
+                response.end('Oops! There was a problem');
+            } else {
+                response.writeHead(201, { 'Location': '/main' });
+                response.end();
+            }
+        });
+    }
+}
 
 const staticFileHandler = (request, response, endpoint) => {
     const extensionType = {
@@ -185,10 +199,10 @@ const addItemHandler = (request, response) => {
         let decoded = decode(cookies.jwt);
 
         let itemObj = {
-          userId : decoded.id,
-          cost : newItem.cost,
-          category: newItem.category,
-          date: newItem.date
+            userId: decoded.id,
+            cost: newItem.cost,
+            category: newItem.category,
+            date: newItem.date
         }
 
         setNewItem(itemObj, (err, res) => {
@@ -228,4 +242,4 @@ const logoutHandler = (request, response) => {
     response.end('working');
 }
 
-module.exports = { homeHandler, mainPageHandler, staticFileHandler, signUpHandler, loginHandler, logoutHandler, addItemHandler, sumAllHandler, displayItemsHandler }
+module.exports = { homeHandler, mainPageHandler, authCheckHandler, staticFileHandler, signUpHandler, loginHandler, logoutHandler, addItemHandler, sumAllHandler, displayItemsHandler }
