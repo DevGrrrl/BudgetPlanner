@@ -6,18 +6,6 @@ var validateSignup = document.getElementById('validateMsgSignup');
 var validateLogin = document.getElementById('validateMsgLogin');
 var formSubmit = document.getElementById('form-signup');
 
-window.onload = function() {
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 201) {
-                window.location.href = xhr.getResponseHeader('Location')
-            }
-        }
-    };
-    xhr.open('GET', 'auth_check', true);
-    xhr.send();
-}
 
 formSubmit.addEventListener('submit', function(event) {
     if (validateSignup.childElementCount > 0) {
