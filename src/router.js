@@ -1,24 +1,26 @@
-const { homeHandler, staticFileHandler, signUpHandler, loginHandler, logoutHandler, addItemHandler, sumAllHandler, displayItemsHandler } = require('./handler');
+const { homeHandler, staticFileHandler, signUpHandler, loginHandler, mainPageHandler, logoutHandler, addItemHandler, sumAllHandler, displayItemsHandler } = require('./handler');
 
 const router = (request, response) => {
 
     const endpoint = request.url;
     if (endpoint === '/') {
         homeHandler(request, response);
-    } else if (endpoint.indexOf("public") !== -1) {
+    } else if (endpoint.includes("public")) {
         staticFileHandler(request, response, endpoint);
-    } else if (endpoint.indexOf("signup") !== -1){
+    } else if (endpoint.includes("signup")){
         signUpHandler(request, response, endpoint);
-    } else if (endpoint.indexOf("login") !== -1){
-
+    } else if (endpoint.includes("login")){
         loginHandler(request, response, endpoint);
-    } else if (endpoint.indexOf("logout") !== -1){
+    } else if (endpoint.includes("logout")){
         logoutHandler(request, response, endpoint);
-    } else if (endpoint.indexOf("add") !== -1) {
+    } else if (endpoint.includes("/main")) {
+        mainPageHandler(request, response);
+    }
+      else if (endpoint.includes("add")) {
         addItemHandler(request, response, endpoint);
-    } else if (endpoint.indexOf("sumall") !== -1) {
+    } else if (endpoint.includes("sumall")) {
         sumAllHandler(request, response);
-    } else if (endpoint.indexOf("displayItems") !== -1) {
+    } else if (endpoint.includes("displayItems")) {
         displayItemsHandler(request, response);
     } else {
         response.writeHead('404', {
