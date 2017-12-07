@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const querystring = require('querystring');
+const { parse } = require('cookie');
+const { sign, verify } = require('jsonwebtoken');
 const checkUser = require('./queries/check_user');
 const createUser = require('./queries/create_user');
 const setNewItem = require('./queries/set_new_item');
@@ -41,7 +43,57 @@ const staticFileHandler = (request, response, endpoint) => {
     })
 };
 
-const inputHandler = (request, response, endpoint) => {
+const signUpHandler = (request, response, endpoint) => {
+  var allTheData = '';
+  request.on('data', (chunckOfData) => {
+      allTheData += chunckOfData;
+  });
+  request.on('end', () => {
+      const userData = JSON.parse(allTheData);
+
+  //validate & hash here
+
+      checkUser(userData, (err, res) => {
+          if (err) console.log(err)
+          if (res === 0) {
+              createUser(userData, (err, res) => {
+                  if (err) console.log(err)
+                  let stringed = (JSON.stringify(res));
+                  stringed = JSON.parse(stringed)[0];
+                  const cookie = sign(stringed, SECRET);
+                    res.writeHead(302,{'Location': '/','Set-Cookie': `jwt=${cookie}; HttpOnly`});
+                    res.end();
+                }
+              }
+            } else if (res === 1) {
+            res.writeHead(202, { 'content-type': 'text/html' })
+            res.end(`username: ${userData.username} already exists, try logging in`);
+        }
+    }
+
+const loginHandler = (request, response, endpoint) => {
+  var allTheData = '';
+  request.on('data', (chunckOfData) => {
+      allTheData += chunckOfData;
+  });
+  request.on('end', () => {
+      const userData = JSON.parse(allTheData);
+
+    //validate & hash here
+    checkUser(userData, (err, res) => {
+        if (err) console.log(err)
+        if (res === 0) {
+          res.writeHead(202, { 'content-type': 'text/html' })
+          res.end(`username: ${userData.username} doesn\'t exist, please sign up`);
+        } else if (res !== 0) {
+          getPassword(userData, (err, res) => {
+            if (err) console.log(err)
+          })
+        }
+}
+
+
+const addItemHandler = (request, response, endpoint) => {
     var allTheData = '';
     request.on('data', (chunckOfData) => {
         allTheData += chunckOfData;
@@ -49,27 +101,14 @@ const inputHandler = (request, response, endpoint) => {
     request.on('end', () => {
         const newItem = JSON.parse(allTheData);
         console.log(newItem);
-        checkUser(newItem, (err, res) => {
+        setNewItem(newItem, (err, res) => {
             if (err) console.log(err)
-            if (res === 0) {
-                createUser(newItem, (err, res) => {
-                    if (err) console.log(err)
-                    setNewItem(newItem, (err, res) => {
-                        if (err) console.log(err)
-                        response.writeHead(200, { 'content-type': 'application/json' })
-                        response.writeHead(200, { 'location': '/' })
-                        response.end(JSON.stringify(res));
-                    })
-                })
-            } else if (res === 1) {
-                setNewItem(newItem, (err, res) => {
-                    if (err) console.log(err)
-                    response.writeHead(200, { 'content-type': 'application/json' })
-                    response.writeHead(200, { 'location': '/' })
-                    response.end(JSON.stringify(res));
-                })
-            }
-        })
+            response.writeHead(200, { 'content-type': 'application/json' })
+            response.writeHead(200, { 'location': '/' })
+            response.end(JSON.stringify(res));
+            })
+          })
+        }
     })
 };
 
@@ -95,4 +134,4 @@ const displayItemsHandler = (request, response) => {
     })
 }
 
-module.exports = { homeHandler, staticFileHandler, inputHandler, sumAllHandler, displayItemsHandler }
+module.exports = { homeHandler, staticFileHandler, signUpHandler, loginHandler, logoutHandler, addItemHandler, sumAllHandler, displayItemsHandler}
