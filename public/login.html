@@ -16,8 +16,8 @@
  <h2>Signup</h2>
   <form class="signup" id="form-signup" onsubmit="return checkPassword()" action="signup" method="post">
     <input type="text" name="username" value="" placeholder="Name" pattern="[a-zA-Z0-9]+" required>
-    <input type="password" id="signupPW1" name="password" value="" placeholder="Password" pattern="[a-zA-Z0-9]{8}" required>
-    <input type="password" id="signupPW2" name="password2" value="" placeholder="Confirm password" pattern="[a-zA-Z0-9]{8}" required>
+    <input type="password" id="signupPW1" name="password" value="" placeholder="Password" pattern="[a-zA-Z0-9]{8,}" required>
+    <input type="password" id="signupPW2" name="password2" value="" placeholder="Confirm password" pattern="[a-zA-Z0-9]{8,}" required>
     <input type="Submit" value="Submit" >
   </form>
   <div class="" id="validateMsgSignup"></div>
@@ -27,7 +27,7 @@
 <h2>Login</h2>
   <form class="login" id="form-login" action="login" method="post">
     <input type="text" name="username" value="" placeholder="Name" pattern="[a-zA-Z0-9]+" required>
-    <input type="password" name="password" value="" placeholder="Password" pattern="[a-zA-Z0-9]{8}" required>
+    <input type="password" name="password" value="" placeholder="Password" pattern="[a-zA-Z0-9]{8,}" required>
    <input type="Submit"   value="Submit" >
   </form>
   <div class="" id="validateMsgSignup"></div>
