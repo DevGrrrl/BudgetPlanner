@@ -22,11 +22,11 @@ signupPassword2.addEventListener('input', function(event) {
 });
 
 
-signupPassword1.setCustomValidity("Password must be 8 or more characters long and contain at least: 1 uppcase letter, 1 lowercase letter, and 1 number");
-signupPassword2.setCustomValidity("Password must be 8 or more characters long and contain at least: 1 uppcase letter, 1 lowercase letter, and 1 number");
-loginPassW.setCustomValidity("Password must be 8 or more characters long and contain at least: 1 uppcase letter, 1 lowercase letter, and 1 number");
-signupName.setCustomValidity("Name must only contain upper and lowercase letters");
-loginName.setCustomValidity("Name must only contain upper and lowercase letters");
+// signupPassword1.setCustomValidity("Password must be 8 or more characters long and contain at least: 1 uppcase letter, 1 lowercase letter, and 1 number");
+// signupPassword2.setCustomValidity("Password must be 8 or more characters long and contain at least: 1 uppcase letter, 1 lowercase letter, and 1 number");
+// loginPassW.setCustomValidity("Password must be 8 or more characters long and contain at least: 1 uppcase letter, 1 lowercase letter, and 1 number");
+// signupName.setCustomValidity("Name must only contain upper and lowercase letters");
+// loginName.setCustomValidity("Name must only contain upper and lowercase letters");
 
 // signupName.oninvalid = function(event) {
 //     event.target.setCustomValidity('Name must only contain upper and lowercase letters');
