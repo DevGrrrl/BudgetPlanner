@@ -42,6 +42,21 @@ const comparePasswords = (userObj, databasePassword, callback) => {
     });
 }
 
+/* calculate average */
 
+const calcAverages = res => {
+    let avg = findAvg(res);
+    return {
+        summedCosts: res,
+        average: avg,
+    }
+}
+const findAvg = res => {
+    let total = 0;
+    res.forEach((item) => {
+        total += item.sum
+    })
+    return (total / res.length).toFixed(2);
+}
 
-module.exports = { validateUser, genHashedPassword, comparePasswords };
+module.exports = { validateUser, genHashedPassword, comparePasswords, calcAverages };
