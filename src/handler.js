@@ -11,17 +11,16 @@ const unpaidItems = require('./queries/unpaid_items.js');
 const markAsPaid = require('./queries/mark_as_paid');
 const getPassword = require('./queries/get_password');
 const getUserId = require('./queries/get_user_id');
-const { validateUser, genHashedPassword, comparePasswords } = require('./logic');
+const { validateUser, genHashedPassword, comparePasswords, calcAverages } = require('./logic');
 
 const homeHandler = (request, response) => {
     if (request.headers.cookie) {
         let cookies = cookieModule.parse(request.headers.cookie);
         verify(cookies.jwt, process.env.SECRET, function(err, decoded) {
             if (err) {
-                response.writeHead(500, { 'content-type': 'text/html' });
-                response.end('Oops! There was a problem');
+                response.writeHead(302, { 'Location': '/', 'Set-Cookie': 'jwt=0; Max-Age=0' });
+                response.end();
             } else {
-                console.log('xxx')
                 response.writeHead(302, { 'Location': '/main' });
                 response.end();
             }
@@ -29,14 +28,10 @@ const homeHandler = (request, response) => {
     } else {
         fs.readFile(path.join(__dirname, '..', 'public', 'login.html'), 'utf8', (err, file) => {
             if (err) {
-                response.writeHead(500, {
-                    'content-type': 'text/plain'
-                })
-                response.end('Server error');
+                response.writeHead(500, { 'content-type': 'text/plain' })
+                response.end('Oops! There was a problem');
             } else {
-                response.writeHead(200, {
-                    'content-type': 'text/html'
-                })
+                response.writeHead(200, { 'content-type': 'text/html' })
                 response.end(file);
             };
 
@@ -46,20 +41,30 @@ const homeHandler = (request, response) => {
 
 
 const mainPageHandler = (request, response) => {
-    fs.readFile(path.join(__dirname, '..', 'public', 'index.html'), 'utf8', (err, file) => {
-        if (err) {
-            response.writeHead(500, {
-                'content-type': 'text/plain'
-            })
-            response.end('Server error');
-        } else {
-            response.writeHead(200, {
-                'content-type': 'text/html'
-            })
-            response.end(file);
-        };
+    if (request.headers.cookie) {
+        let cookies = cookieModule.parse(request.headers.cookie);
+        verify(cookies.jwt, process.env.SECRET, function(err, decoded) {
+            if (err) {
+                response.writeHead(500, { 'content-type': 'text/plain' })
+                response.end('Oops! There was a problem');
+            } else {
+                fs.readFile(path.join(__dirname, '..', 'public', 'index.html'), 'utf8', (err, file) => {
+                    if (err) {
+                        response.writeHead(500, { 'content-type': 'text/plain' })
+                        response.end('Oops! There was a problem');
+                    } else {
+                        response.writeHead(200, { 'content-type': 'text/html', 'Username': decoded.user_name })
+                        response.end(file);
+                    };
 
-    })
+                })
+            }
+        });
+    } else {
+        response.writeHead(302, { 'Location': '/', 'Set-Cookie': 'jwt=0; Max-Age=0' });
+        response.end();
+    }
+
 };
 
 const staticFileHandler = (request, response, endpoint) => {
@@ -205,10 +210,15 @@ const addItemHandler = (request, response) => {
         }
 
         setNewItem(itemObj, (err, res) => {
-            if (err) console.log(err)
-            response.writeHead(200, { 'content-type': 'application/json' })
-            response.writeHead(200, { 'location': 'main' })
-            response.end(JSON.stringify(res));
+            if (err) {
+                response.writeHead(500, { 'content-type': 'text/html' });
+                response.end('Oops! There was a problem');
+            } else {
+                response.writeHead(200, { 'content-type': 'application/json' })
+                response.writeHead(200, { 'location': 'main' })
+                response.end(JSON.stringify(res));
+            }
+
         })
     })
 }
@@ -216,13 +226,25 @@ const addItemHandler = (request, response) => {
 
 const sumAllHandler = (request, response) => {
     getCostsPerPerson((err, res) => {
-        if (err) console.log(err)
+        if (err) {
+            response.writeHead(500, { 'content-type': 'text/html' });
+            response.end('Oops! There was a problem');
+        } else {
+            response.writeHead(200, { 'content-type': 'application/json' })
+            response.writeHead(200, { 'location': 'main' })
+            response.end(JSON.stringify(res));
+        }
         response.writeHead(200, { 'content-type': 'application/json' })
-        response.end(JSON.stringify(res));
+        let summedCosts = calcAverages(res)
+        response.end(JSON.stringify(summedCosts));
         markAsPaid((err, res) => {
-            if (err) console.log(err);
-            response.writeHead(200, { 'content-type': 'text/html' })
-            response.end('All items paid.');
+            if (err) {
+                response.writeHead(500, { 'content-type': 'text/html' });
+                response.end('Oops! There was a problem');
+            } else {
+                response.writeHead(200, { 'content-type': 'text/html' })
+                response.end('All items paid.');
+            }
         });
     })
 }
@@ -230,9 +252,13 @@ const sumAllHandler = (request, response) => {
 
 const displayItemsHandler = (request, response) => {
     unpaidItems((err, res) => {
-        if (err) console.log(err)
-        response.writeHead(200, { 'content-type': 'application/json' })
-        response.end(JSON.stringify(res));
+        if (err) {
+            response.writeHead(500, { 'content-type': 'text/html' });
+            response.end('Oops! There was a problem');
+        } else {
+            response.writeHead(200, { 'content-type': 'application/json' })
+            response.end(JSON.stringify(res));
+        }
     })
 }
 
@@ -241,14 +267,32 @@ const logoutHandler = (request, response) => {
     response.end('working');
 }
 
+const displayUsernameHandler = (request, response) => {
+    if (request.headers.cookie) {
+        let cookies = cookieModule.parse(request.headers.cookie);
+        verify(cookies.jwt, process.env.SECRET, function(err, decoded) {
+            if (err) {
+                response.writeHead(500, { 'content-type': 'text/plain' })
+                response.end('Oops! There was a problem');
+            } else {
+                response.end(JSON.stringify(decoded.user_name));
+            }
+        });
+    } else {
+        response.writeHead(302, { 'Location': '/', 'Set-Cookie': 'jwt=0; Max-Age=0' });
+        response.end();
+    }
+}
+
 module.exports = {
-  homeHandler,
-  mainPageHandler,
-  staticFileHandler,
-  signUpHandler,
-  loginHandler,
-  logoutHandler,
-  addItemHandler,
-  sumAllHandler,
-  displayItemsHandler
+    homeHandler,
+    mainPageHandler,
+    staticFileHandler,
+    signUpHandler,
+    loginHandler,
+    logoutHandler,
+    addItemHandler,
+    sumAllHandler,
+    displayItemsHandler,
+    displayUsernameHandler
 }
