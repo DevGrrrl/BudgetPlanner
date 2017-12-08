@@ -51,7 +51,7 @@ input[type="submit"] {
 
   .signup-container , .login-container {
     width: 50%;
-
+    min-height: 100vh;
     padding: 3rem;
     font-size: 1rem;
     text-align: left;
