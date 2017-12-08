@@ -18,7 +18,7 @@ body {
     /* width: 80%; */
     min-height: 50vh;
     overflow: auto;
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.6);
     padding: 0 10%;
 
 }
@@ -55,16 +55,20 @@ input[type="submit"] {
     padding: 3rem;
     font-size: 1rem;
     text-align: left;
+    background: rgba(255, 255, 255, 0.85);
   }
 form {
     max-width: 80%;
 }
 
   input {
-    margin: 0;
-    padding: 0;
-    /* font size below being over ridden by mobile css!*/
-    /*font-size: 0.2;*/
+    margin: 1%;
     background-color: white;
+  }
+
+    input[type="submit"] {
+      font-size: 1.2rem;
+
+    }
 }
 }
