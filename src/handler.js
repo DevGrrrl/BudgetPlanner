@@ -241,4 +241,14 @@ const logoutHandler = (request, response) => {
     response.end('working');
 }
 
-module.exports = { homeHandler, mainPageHandler, staticFileHandler, signUpHandler, loginHandler, logoutHandler, addItemHandler, sumAllHandler, displayItemsHandler }
+module.exports = {
+  homeHandler,
+  mainPageHandler,
+  staticFileHandler,
+  signUpHandler,
+  loginHandler,
+  logoutHandler,
+  addItemHandler,
+  sumAllHandler,
+  displayItemsHandler
+}
