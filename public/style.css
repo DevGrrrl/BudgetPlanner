@@ -2,7 +2,6 @@ html,
 body {
     font-family: 'Quicksand', sans-serif;
     width: 100vw;
-
     /*height: 100vh;*/
     margin: 0;
     padding: 0;
@@ -39,7 +38,7 @@ body {
 }
 
 .tagline {
-  margin-left: 10%;
+    margin-left: 10%;
 }
 
 input,
@@ -57,29 +56,30 @@ select,
 }
 
 .sumbtn {
-  margin-left: 10%;
-  background-color: #E2E0E1;
+    margin-left: 10%;
+    background-color: #E2E0E1;
 }
 
 .logoutbtn {
-  color: white;
-  font-family: 'Quicksand', sans-serif;
-  font-size: 0.9em;
-  text-align: center;
-  width: 80%;
-  height: 3rem;
-  margin-bottom: 1rem;
-  border: 1px solid #d3d3d3;
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 5px;
-  background-color: rgb(22, 21, 23);
-  margin-left: 10%;
+    color: white;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.9em;
+    text-align: center;
+    width: 80%;
+    height: 3rem;
+    margin-bottom: 1rem;
+    border: 1px solid #d3d3d3;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 5px;
+    background-color: rgb(22, 21, 23);
+    margin-left: 10%;
 }
+
 .dataContainer {
     display: flex;
     align-items: center;
     min-width: 60%;
-    padding:0;
+    padding: 0;
     background-color: white;
     opacity: 0.7;
 }
@@ -97,31 +97,33 @@ select,
     width: 100%;
 }
 
+
 /*media queries for desktop*/
-@media  screen and (min-width: 550px)  {
 
-  body {
-    display: flex;
-    justify-content: flex-end;
-    flex-direction: row;
-    /*change height to 100vh*/
-  }
-
-
- .form_container {
-     width: 30%;
-
- }
-
- .header {
-    padding-left: 10%;
-    margin-top: 2em;
-    margin-bottom: 2em;
-    text-align: left;
- }
-
- .dataContainer {
-     padding: 5%;
- }
-
+@media screen and (min-width: 550px) {
+    body {
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: row;
+        /*change height to 100vh*/
+    }
+    .form_container {
+        width: 30%;
+    }
+    .header {
+        padding-left: 10%;
+        margin-top: 2em;
+        margin-bottom: 2em;
+        text-align: left;
+    }
+    .dataContainer {
+        padding: 5%;
+    }
+    .display_username {
+        background: rgba(255, 255, 255, 0.7);
+        margin: 0;
+        height: 50px;
+        padding: 2%;
+        z-index: 2;
+    }
 }

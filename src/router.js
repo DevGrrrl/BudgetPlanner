@@ -1,7 +1,17 @@
-const { homeHandler, staticFileHandler, signUpHandler, loginHandler, mainPageHandler, logoutHandler, addItemHandler, sumAllHandler, displayItemsHandler } = require('./handler');
+const {
+    homeHandler,
+    staticFileHandler,
+    signUpHandler,
+    loginHandler,
+    mainPageHandler,
+    logoutHandler,
+    addItemHandler,
+    sumAllHandler,
+    displayItemsHandler,
+    displayUsernameHandler
+} = require('./handler');
 
 const router = (request, response) => {
-
     const endpoint = request.url;
     if (endpoint === '/') {
         homeHandler(request, response);
@@ -23,12 +33,13 @@ const router = (request, response) => {
         sumAllHandler(request, response);
     } else if (endpoint.includes("displayItems")) {
         displayItemsHandler(request, response);
+    } else if (endpoint.includes("username")) {
+        displayUsernameHandler(request, response);
     } else {
         response.writeHead('404', {
             'Content-Type': 'text/html'
         });
         response.end('404, file not found');
     }
-
 }
 module.exports = router;
