@@ -15,7 +15,7 @@ const router = (request, response) => {
         loginHandler(request, response);
     } else if (endpoint.includes("logout")) {
         logoutHandler(request, response);
-    } else if (endpoint.includes("/main")) {
+    } else if (endpoint.includes("main")) {
         mainPageHandler(request, response);
     } else if (endpoint.includes("add")) {
         addItemHandler(request, response);

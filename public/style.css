@@ -2,6 +2,8 @@ html,
 body {
     font-family: 'Quicksand', sans-serif;
     width: 100vw;
+
+    /*height: 100vh;*/
     margin: 0;
     padding: 0;
     background-image: url(./kittysplitter.jpeg);
@@ -28,8 +30,8 @@ body {
 }
 
 .header {
-    margin-top: 2em;
-    margin-bottom: 2em;
+    margin-top: 1em;
+    margin-bottom: 1em;
     /*padding-left: 10%;*/
     text-align: center;
     font-size: 2rem;
@@ -56,7 +58,6 @@ select,
 
 .sumbtn {
   margin-left: 10%;
-  margin-top: 5%;
   background-color: #E2E0E1;
 }
 
@@ -73,13 +74,11 @@ select,
   border-radius: 5px;
   background-color: rgb(22, 21, 23);
   margin-left: 10%;
-  margin-top: 5%;
 }
 .dataContainer {
     display: flex;
     align-items: center;
     min-width: 60%;
-    /*padding: 5%;*/
     padding:0;
     background-color: white;
     opacity: 0.7;
@@ -98,21 +97,26 @@ select,
     width: 100%;
 }
 
+/*media queries for desktop*/
 @media  screen and (min-width: 550px)  {
 
   body {
     display: flex;
     justify-content: flex-end;
     flex-direction: row;
+    /*change height to 100vh*/
   }
 
 
  .form_container {
      width: 30%;
+
  }
 
  .header {
     padding-left: 10%;
+    margin-top: 2em;
+    margin-bottom: 2em;
     text-align: left;
  }
 

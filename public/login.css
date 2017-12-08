@@ -1,6 +1,4 @@
 body {
-  display: flex;
-  flex-direction: row;
   font-family: 'Quicksand', sans-serif;
   width: 100vw;
   margin: 0;
@@ -11,22 +9,62 @@ body {
 }
 
 .signup-container , .login-container {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  min-height: 100vh;
-  overflow: auto;
-  background: rgba(255, 255, 255, 0.85);
-  padding: 3rem;
+
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 1.5rem;
+    margin: auto;
+    /* width: 80%; */
+    min-height: 50vh;
+    overflow: auto;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 0 10%;
+
 }
 
 form {
   display: flex;
   flex-direction: column;
-  max-width: 80%;
+  max-width: 100%;
+}
+
+input {
+  margin:2%;
+  padding:2%;
+  font-size: 0.8rem;
+  background-color: white;
 }
 
 input[type="submit"] {
   width: 30%;
   align-self: center;
+}
+
+/*desktop css below*/
+@media  screen and (min-width: 550px)  {
+
+  body {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .signup-container , .login-container {
+    width: 50%;
+    min-height: 100vh;
+    padding: 3rem;
+    font-size: 1rem;
+    text-align: left;
+  }
+form {
+    max-width: 80%;
+}
+
+  input {
+    margin: 0;
+    padding: 0;
+    /* font size below being over ridden by mobile css!*/
+    /*font-size: 0.2;*/
+    background-color: white;
+}
 }
