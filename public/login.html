@@ -12,12 +12,12 @@
 
 <body>
     <!-- form uses the name attribute of each element to create an object property key pair -->
-    <div class="signup-container">
+    <div class="signup-container" id="signupContainer">
         <h2>Signup</h2>
         <form class="signup" id="form-signup" action="signup" method="POST">
-            <input type="text" name="username" value="" placeholder="Name" pattern="[a-zA-Z0-9]+" required>
-            <input type="password" id="signupPW1" name="password" value="" placeholder="Password" pattern="[a-zA-Z0-9]{8,}" required>
-            <input type="password" id="signupPW2" name="password2" value="" placeholder="Confirm password" pattern="[a-zA-Z0-9]{8,}" required>
+            <input type="text" id="sign-upName" name="username" value="" placeholder="Name" pattern="[a-zA-Z]+" required>
+            <input type="password" id="signupPW1" name="password" value="" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"required>
+            <input type="password" id="signupPW2" name="password2" value="" placeholder="Confirm password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
             <input type="Submit" value="Submit">
         </form>
         <div id="validateMsgSignup"></div>
@@ -26,8 +26,8 @@
     <div class="login-container">
         <h2>Login</h2>
         <form class="login" id="form-login" action="login" method="POST">
-            <input type="text" name="username" value="" placeholder="Name" pattern="[a-zA-Z0-9]+" required>
-            <input type="password" name="password" value="" placeholder="Password" pattern="[a-zA-Z0-9]{8,}" required>
+            <input type="text" id="loginName" name="username" value="" placeholder="Name" pattern="[a-zA-Z]+" required>
+            <input type="password" name="password" id="loginPW" value="" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
             <input type="Submit" value="Submit">
         </form>
         <div class="" id="validateMsgSignup"></div>
